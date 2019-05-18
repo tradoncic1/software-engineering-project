@@ -3,18 +3,22 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "mocha || true"
   },
   "dependencies": {
-    "body-parser": "~1.17.1",
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "ejs": "~2.5.6",
-    "express": "^4.15.5",
+    "express": "^4.17.0",
     "jsonwebtoken": "^8.4.0",
+    "mocha": "^6.1.4",
     "moment": "^2.22.2",
     "mongoose": "^5.3.15",
-    "morgan": "~1.8.1",
+    "morgan": "^1.9.1",
+    "request": "^2.88.0",
     "serve-favicon": "~2.4.2"
   }
 }

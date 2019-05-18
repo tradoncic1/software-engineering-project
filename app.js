@@ -63,3 +63,11 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+module.exports = {
+    mongodbTest: function() {
+        //console.log(db);
+        return db != null;
+    }
+}
+
