@@ -10,14 +10,14 @@ angular.module('app')
         users = Users.querydev();
         statuslist = Tickets.statuslist();
         modalInstance = $uibModal.open({
-            // kontroler koji se koristi za modalni prozor
+            // controller used for modal
             controller: 'NoteInstanceCtrl',
             controllerAs: '$ctrl',
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
             templateUrl: 'ticketdet/note_modal.html' ,
-            // vrijednost koja se proslijeđuje u kontroler kao lokana varijabla 
+            // value passed to controller as local variable
             resolve: {
               users: function() {return users},
               assignedto : function() { 
@@ -35,7 +35,7 @@ angular.module('app')
             console.log(data.notetext);
             console.log(data.assignedto);
             console.log("autor note "+$rootScope.appuser);
-            // ubacivanje na listu na ekranu
+            // insert to list on screen
               $scope.ticket.notes.push (
                 {
                   notetext : data.notetext,
@@ -48,9 +48,9 @@ angular.module('app')
               $scope.ticket.status=data.status; 
 
               Tickets.update($scope.ticket, function(resticket){
-              });         // spremanje u bazu
+              });// save to database
               
-              //ponovo čitanje iz baze 
+              // reread from database
               $scope.ticket = Tickets.get({id:$scope.ticket._id});
         }, function () {
             console.log('Modal dismissed');
@@ -65,14 +65,14 @@ angular.module('app')
        statuslist = Tickets.statuslist();
 
        modalInstance = $uibModal.open({
-           // kontroler koji se koristi za modalni prozor
+           // controller used for modal window
            controller: 'AssignInstanceCtrl',
            controllerAs: '$ctrl',
            animation: true,
            ariaLabelledBy: 'modal-title',
            ariaDescribedBy: 'modal-body',
            templateUrl: 'ticketdet/noteassign_modal.html' ,
-           // vrijednost koja se proslijeđuje u kontroler kao lokana varijabla 
+           // value passed to controller as local variable
            resolve: {
              assignedto: function () {
                if($scope.ticket.assignedto) {
@@ -89,8 +89,8 @@ angular.module('app')
            console.log('Modal OK clicked');
              $scope.ticket.assignedto=data.assignedto; //$scope.ticket.assignedto._id;
              $scope.ticket.status=data.status; 
-             Tickets.update($scope.ticket);         // spremanje u bazu
-             $scope.ticket = Tickets.get({id:$scope.ticket._id}); // učitavanje 
+             Tickets.update($scope.ticket);         // save to database
+             $scope.ticket = Tickets.get({id:$scope.ticket._id}); // loading
        }, function () {
            console.log('Modal dismissed');
        });

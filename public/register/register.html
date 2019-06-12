@@ -6,56 +6,66 @@
 
 <form name="userForm" ng-hide="completed">
 
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" placeholder="Enter full name" name="name"
-                         ng-model="user.name" required>
-                        <span style="color:red" ng-show="userForm.name.$dirty && userForm.name.$invalid">
-                            <span ng-show="userForm.name.$error.required">Full name is required.</span>
-                        </span>
-                    </div>
-    
-                    <div class="form-group">
-                            <label>Email address</label>
-                            <input type="email" class="form-control" placeholder="Enter email" name="email" 
-                            ng-model="user.email" required>
-                            <small class="form-text text-muted">We'll never share your email with anyone else.</small><br>
-                            <span style="color:red" ng-show="userForm.email.$dirty && userForm.email.$invalid">
-                                <span ng-show="userForm.email.$error.required">Email is required.</span>
-                                <span ng-show="userForm.email.$error.email">Invalid email address.</span>
-                            </span>
-                    </div>
-    
-                    <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" class="form-control" placeholder="Enter username" name="username"
-                             ng-model="user.username" required>
-                            <span style="color:red" ng-show="userForm.username.$dirty && userForm.username.$invalid">
-                                <span ng-show="userForm.username.$error.required">username is required.</span>
-                            </span>
-                    </div>
-    
-                    <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password" name="password" 
-                            ng-model="user.password" required>  
-                            <span style="color:red" ng-show="userForm.password.$dirty && userForm.password.$invalid">
-                                <span ng-show="userForm.password.$error.required">Password is required.</span>
-                                <span ng-show="userForm.password.$error.strongPassword">Password has to have letter e.</span>
-                            </span>
-                    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" placeholder="Enter full name" name="name" ng-model="user.name" required>
+        <span style="color:red" ng-show="userForm.name.$dirty && userForm.name.$invalid">
+            <span ng-show="userForm.name.$error.required">Full name is required.</span>
+        </span>
+    </div>
 
-                    <div class="form-group">
-                            <label>Confirm Password</label>
-                            <input type="password" class="form-control" placeholder="Confirm password" name="password2" 
-                            ng-model="user.password2" required>  
-                            <span ng-show="user.password2 != user.password">Passwords does not match</span>
-                            <span style="color:red" ng-show="userForm.password2.$dirty && userForm.password2.$invalid && userForm.password2 != userForm.password">
-                                <span ng-show="userForm.password.$error.required">Password is required.</span>
-                                <span ng-show="userForm.password.$error.strongPassword">Password has to have letter e.</span>
-                                <span ng-show="userForm.password2 != userForm.password">Passwords does not match</span>
-                            </span>
-                    </div>
-                    
-            <button class="btn btn-primary" type="button" ng-click="register()" ng-disabled="userForm.$invalid">OK</button>
-    </form>
+    <div class="form-group">
+        <label>Email address</label>
+        <input type="email" class="form-control" placeholder="Enter email" name="email" ng-model="user.email" required>
+        <small class="form-text text-muted">We'll never share your email with anyone else.</small><br>
+        <span style="color:red" ng-show="userForm.email.$dirty && userForm.email.$invalid">
+            <span ng-show="userForm.email.$error.required">Email is required.</span>
+            <span ng-show="userForm.email.$error.email">Invalid email address.</span>
+        </span>
+    </div>
+
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" placeholder="Enter username" name="username" ng-model="user.username"
+            required>
+        <span style="color:red" ng-show="userForm.username.$dirty && userForm.username.$invalid">
+            <span ng-show="userForm.username.$error.required">username is required.</span>
+        </span>
+    </div>
+
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" placeholder="Password" name="password" ng-model="user.password"
+            required>
+        <span style="color:red" ng-show="userForm.password.$dirty && userForm.password.$invalid">
+            <span ng-show="userForm.password.$error.required">Password is required.</span>
+            <span ng-show="userForm.password.$error.strongPassword">Password has to have letter e.</span>
+        </span>
+    </div>
+
+    <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control" placeholder="Confirm password" name="password2"
+            ng-model="user.password2" required>
+        <span ng-show="user.password2 != user.password">Passwords does not match</span>
+        <span style="color:red"
+            ng-show="userForm.password2.$dirty && userForm.password2.$invalid && userForm.password2 != userForm.password">
+            <span ng-show="userForm.password.$error.required">Password is required.</span>
+            <span ng-show="userForm.password.$error.strongPassword">Password has to have letter e.</span>
+            <span ng-show="userForm.password2 != userForm.password">Passwords does not match</span>
+        </span>
+    </div>
+
+    <div class="form-group">
+        <label>User type</label>
+        <br>
+        <select name="role" ng-model="user.role" class="form-control" ng-change="user.role" required>
+            <option disabled selected value>Select an option</option>
+            <option ng-option="user" value="user" ng-model="user.role">User</option>
+            <option ng-option="admin" value="admin" ng-model="user.role">Admin</option>
+            <option ng-option="developer" value="developer" ng-model="user.role">Developer</option>
+        </select>
+    </div>
+
+    <button class="btn btn-primary" type="button" ng-click="register()" ng-disabled="userForm.$invalid">OK</button>
+</form>

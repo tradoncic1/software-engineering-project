@@ -1,46 +1,90 @@
-angular.module('app')
-.controller ('authCtrl', function ($scope, $rootScope,$location, Login, $http){
-  $scope.loged= $rootScope.loged || false;
-  // token authentication
-  
-  $scope.login = function () {
-      Login.save({username:$scope.username,password:$scope.password}, function(loginres){
-       // console.log(loginres);
-        if (loginres.success) {
-          // successful login attempt
-         
-          localStorage.setItem('user',loginres.token);
-          localStorage.setItem('userid',loginres.userid);
-          localStorage.setItem('isadmin',loginres.isadmin);
-          localStorage.setItem('token',loginres.token);
+angular
+  .module("app")
+  .controller("authCtrl", function(
+    $scope,
+    $rootScope,
+    $location,
+    $uibModal,
+    Login,
+    $http
+  ) {
+    $scope.loged = $rootScope.loged || false;
+    // token authentication
 
-          $scope.error = null;
-          $http.defaults.headers.common['Authorization'] =  loginres.token;
-          
-          $rootScope.appuser = loginres.userid;
-          $rootScope.loged   = true;
-          $rootScope.isadmin = loginres.isadmin;
-     
-          $scope.loged = true;
-          $location.path('/tickets');
-        } else {
-          $scope.error = loginres.message;
-        };
+    $scope.login = function() {
+      Login.save(
+        { username: $scope.username, password: $scope.password },
+        function(loginres) {
+          // console.log(loginres);
+          if (loginres.success) {
+            // successful login attempt
+
+            localStorage.setItem("user", loginres.token);
+            localStorage.setItem("userid", loginres.userid);
+            localStorage.setItem("isadmin", loginres.isadmin);
+            localStorage.setItem("token", loginres.token);
+
+            $scope.error = null;
+            $http.defaults.headers.common["Authorization"] = loginres.token;
+
+            $rootScope.appuser = loginres.userid;
+            $rootScope.loged = true;
+            $rootScope.isadmin = loginres.isadmin;
+
+            $scope.loged = true;
+            $location.path("/tickets");
+          } else {
+            $scope.error = loginres.message;
+          }
+        }
+      );
+    };
+
+    // logout modal controller
+    $scope.confirmLogout = function() {
+      modalInstance = $uibModal.open({
+        controller: "ModalContentCtrl",
+        animation: true,
+        ariaLabelledBy: "modal-header",
+        ariaDescribedBy: "modal-content",
+        templateUrl: "LogoutModal.html"
       });
-  };
 
-  $scope.logout = function () {
-    console.log('logout');
-    // deleting the token from the local storage and the http header for logout purposes
-    localStorage.removeItem('user');
-    localStorage.removeItem('isadmin');
-    localStorage.removeItem('userid');
-    delete $http.defaults.headers.common.Authorization;
-    $rootScope.loged=false;
-    $rootScope.isadmin=false;
-    $scope.loged = false;
-    $scope.password = null;
-  };
- 
-})
-;
+      modalInstance.result.then(
+        function() {
+          console.log("LogoutModal Yes clicked");
+        },
+        function() {
+          console.log("LogoutModal dismissed");
+        }
+      );
+    };
+  })
+  .controller("ModalContentCtrl", function(
+    $scope,
+    $rootScope,
+    $http,
+    $uibModalInstance,
+    $route
+  ) {
+    $scope.ok = function() {
+      console.log("logout");
+      // deleting the token from the local storage and the http header for logout purposes
+      localStorage.removeItem("user");
+      localStorage.removeItem("isadmin");
+      localStorage.removeItem("userid");
+      delete $http.defaults.headers.common.Authorization;
+      $rootScope.loged = false;
+      $rootScope.isadmin = false;
+      $scope.loged = false;
+      $scope.password = null;
+
+      $uibModalInstance.dismiss();
+
+      $route.reload();
+    };
+
+    $scope.cancel = function() {
+      $uibModalInstance.dismiss();
+    };
+  });
